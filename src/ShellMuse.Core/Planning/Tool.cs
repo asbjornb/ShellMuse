@@ -10,5 +10,6 @@ public enum Tool
     Test,
     Commit,
     Branch,
+    OutdatedPackages,
     Finish,
 }

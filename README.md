@@ -58,7 +58,7 @@ shellmuse run <task> [--max-cost N --max-steps N] [-v]
 ```
 
 The `run` command executes a simple planner loop with built-in tools
-(`search`, `read_file`, `write_file`, `list_dir`, `build`, `test`, `commit`, `branch`, `finish`).
+(`search`, `read_file`, `write_file`, `list_dir`, `build`, `test`, `commit`, `branch`, `outdated_packages`, `finish`).
 
 If the repository contains `.muse-rules.md` or `AGENTS.md`, their contents are
 added to the prompt so the model follows your project-specific guidelines.

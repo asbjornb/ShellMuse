@@ -34,7 +34,7 @@ The MVP targets Windows 10/11 with PowerShell as the primary shell, implemented 
 | F-6 | Git branch workflow – Always work on a Git branch, mount repo to container with RW access | Agent creates/switches to branch before making changes |
 | F-7 | Docker sandbox execution (see §6) | Host FS Git repo modified only through container |
 | F-8 | Planner–executor loop (≤ 10 iterations) | Demo task finishes within step limit |
-| F-9 | Built-in tool palette: search, read_file, write_file, list_dir, build, test, commit | Invalid tool aborts with error; commits allowed on branch |
+| F-9 | Built-in tool palette: search, read_file, write_file, list_dir, build, test, commit, outdated_packages | Invalid tool aborts with error; commits allowed on branch |
 | F-10 | Cost & iteration guardrails (--max-cost, --max-steps) | Exceeding guard exits with code 2 |
 | F-11 | Windows/PowerShell compatibility – All paths, temp dirs work on Windows with PowerShell | CI job on Linux passes build/test acceptance |
 | F-12 | Repository `AGENTS.md` auto-injected | Model responses follow repo instructions. |
@@ -98,7 +98,7 @@ docker_image  = "ghcr.io/shellmuse/runtime:dotnet-slim"
 {
   "type": "object",
   "properties": {
-    "tool": { "enum": [ "search","read_file","write_file","list_dir","build","test","commit","branch","finish" ] },
+    "tool": { "enum": [ "search","read_file","write_file","list_dir","build","test","commit","branch","outdated_packages","finish" ] },
     "args": { "type": "object" }
   },
   "required": ["tool"]

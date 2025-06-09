@@ -21,6 +21,33 @@ src/
 
 Each project targets **.NET 9.0** and will be expanded in future milestones.
 
+## Quick start
+
+1. Install the [.NET 9 SDK preview](https://dotnet.microsoft.com/download/dotnet/9.0).
+2. Export your OpenAI API key:
+
+   ```powershell
+   $env:SHELLMUSE_OPENAIAPIKEY = "sk-..."
+   ```
+
+3. Build the solution:
+
+   ```bash
+   dotnet build
+   ```
+
+4. Ask a question:
+
+   ```bash
+   dotnet run --project src/ShellMuse.Cli -- ask "2+2"
+   ```
+
+5. Run a task inside the sandbox:
+
+   ```bash
+   dotnet run --project src/ShellMuse.Cli -- run "build the project"
+   ```
+
 ## Usage
 
 The `shellmuse` executable exposes two subcommands:

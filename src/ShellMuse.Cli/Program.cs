@@ -1,11 +1,14 @@
 using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 using ShellMuse.Core.Config;
+using ShellMuse.Core.Providers;
 
 namespace ShellMuse.Cli;
 
 public static class Program
 {
-    public static int Main(string[] args)
+    public static async Task<int> Main(string[] args)
     {
         if (args.Length == 0 || args[0] == "ask")
         {
@@ -17,7 +20,11 @@ public static class Program
             }
             var prompt = args[start];
             var config = ConfigLoader.Load();
-            Console.WriteLine($"ASK '{prompt}' (model {config.Model})");
+            using var http = new HttpClient();
+            var provider = new OpenAIChatProvider(http, config);
+            await foreach (var chunk in provider.StreamChatAsync(prompt))
+                Console.Write(chunk);
+            Console.WriteLine();
             return 0;
         }
         else if (args[0] == "run")

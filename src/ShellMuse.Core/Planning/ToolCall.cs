@@ -17,7 +17,9 @@ public record ToolCall(Tool Tool, JsonElement Args)
             var name = toolProp.GetString() ?? string.Empty;
             if (!Enum.TryParse<Tool>(name, true, out var tool))
                 return false;
-            var args = root.TryGetProperty("args", out var a) ? a : default;
+            var args = root.TryGetProperty("args", out var a)
+                ? JsonDocument.Parse(a.GetRawText()).RootElement : default;
+
             call = new ToolCall(tool, args);
             return true;
         }

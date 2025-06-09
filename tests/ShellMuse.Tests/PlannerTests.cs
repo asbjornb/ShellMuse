@@ -18,14 +18,14 @@ public class PlannerTests
         var json = "{\"tool\":\"search\",\"args\":{\"query\":\"foo\"}}";
         Assert.True(ToolCall.TryParse(json, out var call));
         Assert.Equal(Tool.Search, call!.Tool);
-        Assert.Equal("foo", call.Value.Args.GetProperty("query").GetString());
+        Assert.Equal("foo", call.Args.GetProperty("query").GetString());
     }
 
     [Fact]
     public async Task UnknownToolThrows()
     {
         var provider = new SequenceProvider("{\"tool\":\"bad\"}");
-        var palette = new ToolPalette(new (Tool, ITool)[] { (Tool.Search, new StubTool()) });
+        var palette = new ToolPalette([(Tool.Search, new StubTool())]);
         var planner = new Planner(provider, palette);
         await Assert.ThrowsAsync<InvalidOperationException>(() => planner.RunAsync("do"));
     }

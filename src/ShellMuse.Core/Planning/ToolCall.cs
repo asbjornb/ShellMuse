@@ -13,6 +13,7 @@ public record ToolCall(Tool Tool, JsonElement Args)
         error = null;
         try
         {
+            json = CleanJson(json);
             using var doc = JsonDocument.Parse(json);
             var root = doc.RootElement;
             if (!root.TryGetProperty("tool", out var toolProp))
@@ -38,5 +39,20 @@ public record ToolCall(Tool Tool, JsonElement Args)
             error = je.Message;
             return false;
         }
+    }
+
+    private static string CleanJson(string text)
+    {
+        var trimmed = text.Trim();
+        if (trimmed.StartsWith("```"))
+        {
+            var newline = trimmed.IndexOf('\n');
+            if (newline != -1)
+                trimmed = trimmed[(newline + 1)..];
+            if (trimmed.EndsWith("```"))
+                trimmed = trimmed[..^3];
+        }
+
+        return trimmed.Trim();
     }
 }

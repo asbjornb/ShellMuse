@@ -1,5 +1,4 @@
 using System;
-using ShellMuse.Core;
 
 namespace ShellMuse.Runtime;
 

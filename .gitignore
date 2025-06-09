@@ -6,6 +6,9 @@ TestResults/
 # VS Code
 .vscode/
 
+# Visual Studio
+.vs/
+
 # user-specific files
 *.user
 *.suo

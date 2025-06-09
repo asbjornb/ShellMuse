@@ -30,7 +30,7 @@ Each project targets **.NET 9.0** and will be expanded in future milestones.
    $env:SHELLMUSE_OPENAIAPIKEY = "sk-..."
    ```
 
-3. Build the solution:
+3. Build the solution (this runs the CSharpier formatter automatically):
 
    ```bash
    dotnet build

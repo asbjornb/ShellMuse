@@ -1,0 +1,9 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="CSharpier.MSBuild" Version="0.27.1" PrivateAssets="all" />
+  </ItemGroup>
+  <PropertyGroup>
+    <RunCSharpierOnBuild>true</RunCSharpierOnBuild>
+    <CSharpierFailOnError>false</CSharpierFailOnError>
+  </PropertyGroup>
+</Project>

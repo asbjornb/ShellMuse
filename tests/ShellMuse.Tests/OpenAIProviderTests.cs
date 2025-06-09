@@ -28,14 +28,18 @@ public class OpenAIProviderTests
 
     private class StubHandler : HttpMessageHandler
     {
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken
+        )
         {
-            const string data = "data: {\"choices\":[{\"delta\":{\"content\":\"He\"}}]}\n\n" +
-                                 "data: {\"choices\":[{\"delta\":{\"content\":\"llo\"}}]}\n\n" +
-                                 "data: [DONE]\n\n";
+            const string data =
+                "data: {\"choices\":[{\"delta\":{\"content\":\"He\"}}]}\n\n"
+                + "data: {\"choices\":[{\"delta\":{\"content\":\"llo\"}}]}\n\n"
+                + "data: [DONE]\n\n";
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(data)
+                Content = new StringContent(data),
             };
             return Task.FromResult(response);
         }

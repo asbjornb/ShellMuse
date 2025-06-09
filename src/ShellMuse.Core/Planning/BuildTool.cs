@@ -15,7 +15,10 @@ public class BuildTool : ITool
         _repoPath = repoPath;
     }
 
-    public Task<string> RunAsync(System.Text.Json.JsonElement args, CancellationToken cancellationToken = default)
+    public Task<string> RunAsync(
+        System.Text.Json.JsonElement args,
+        CancellationToken cancellationToken = default
+    )
     {
         return _runner.ExecAsync(_repoPath, "dotnet build --nologo", cancellationToken);
     }

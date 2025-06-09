@@ -21,7 +21,11 @@ public class Planner
         _maxSteps = maxSteps;
     }
 
-    public async Task RunAsync(string task, string contextInfo = "", CancellationToken cancellationToken = default)
+    public async Task RunAsync(
+        string task,
+        string contextInfo = "",
+        CancellationToken cancellationToken = default
+    )
     {
         var context = new StringBuilder();
         if (!string.IsNullOrEmpty(contextInfo))
@@ -33,9 +37,10 @@ public class Planner
             if (!ToolCall.TryParse(toolJson, out var call, out var parseError) || call == null)
             {
                 var snippet = toolJson.Length <= 200 ? toolJson : toolJson[..200] + "...";
-                var msg = parseError != null
-                    ? $"Invalid tool call at step {step}: {parseError}. Response: {snippet}"
-                    : $"Invalid tool call at step {step}: {snippet}";
+                var msg =
+                    parseError != null
+                        ? $"Invalid tool call at step {step}: {parseError}. Response: {snippet}"
+                        : $"Invalid tool call at step {step}: {snippet}";
                 throw new InvalidOperationException(msg);
             }
 

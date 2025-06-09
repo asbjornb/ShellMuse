@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
 using ShellMuse.Core.Planning;
 using ShellMuse.Core.Providers;
 using Xunit;
@@ -39,11 +39,9 @@ public class PlannerTests
             "{\"tool\":\"finish\"}"
         );
         var stub = new StubTool();
-        var palette = new ToolPalette(new (Tool, ITool)[]
-        {
-            (Tool.Search, stub),
-            (Tool.Finish, new FinishTool())
-        });
+        var palette = new ToolPalette(
+            new (Tool, ITool)[] { (Tool.Search, stub), (Tool.Finish, new FinishTool()) }
+        );
         var planner = new Planner(provider, palette, 2);
         await planner.RunAsync("task");
         Assert.Equal(2, stub.Count);
@@ -52,7 +50,11 @@ public class PlannerTests
     private class StubTool : ITool
     {
         public int Count { get; private set; }
-        public Task<string> RunAsync(JsonElement args, CancellationToken cancellationToken = default)
+
+        public Task<string> RunAsync(
+            JsonElement args,
+            CancellationToken cancellationToken = default
+        )
         {
             Count++;
             return Task.FromResult("ok");
@@ -62,8 +64,14 @@ public class PlannerTests
     private class SequenceProvider : IChatProvider
     {
         private readonly Queue<string> _responses;
-        public SequenceProvider(params string[] responses) => _responses = new Queue<string>(responses);
-        public async IAsyncEnumerable<string> StreamChatAsync(string prompt, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+
+        public SequenceProvider(params string[] responses) =>
+            _responses = new Queue<string>(responses);
+
+        public async IAsyncEnumerable<string> StreamChatAsync(
+            string prompt,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default
+        )
         {
             if (_responses.Count == 0)
                 yield break;

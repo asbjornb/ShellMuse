@@ -23,4 +23,3 @@ public class ConfigTests
         Environment.SetEnvironmentVariable("SHELLMUSE_MODEL", null);
     }
 }
-

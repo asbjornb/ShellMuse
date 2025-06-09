@@ -37,7 +37,16 @@ public class OpenAIChatProvider : IChatProvider
         var payload = new
         {
             model = _config.Model,
-            messages = new[] { new { role = "user", content = prompt } },
+            messages = new[]
+            {
+                new
+                {
+                    role = "system",
+                    content =
+                        "You are a coding agent. Respond ONLY with JSON matching {\"tool\":string, \"args\":object}. Available tools: search, read_file, write_file, build, test, commit, branch, finish."
+                },
+                new { role = "user", content = prompt }
+            },
             temperature = _config.Temperature,
             max_tokens = _config.MaxTokens,
             stream = true,

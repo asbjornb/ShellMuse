@@ -54,7 +54,8 @@ public class PlannerTests
 
         public Task<string> RunAsync(
             JsonElement args,
-            CancellationToken cancellationToken = default
+            CancellationToken cancellationToken = default,
+            Action<string>? outputLogger = null
         )
         {
             Count++;

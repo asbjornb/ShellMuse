@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ShellMuse.Core.Config;
 using ShellMuse.Core.Git;
 using ShellMuse.Core.Planning;
+using ShellMuse.Core.Planning.Tools;
 using ShellMuse.Core.Providers;
 using ShellMuse.Core.Rules;
 using ShellMuse.Core.Sandbox;

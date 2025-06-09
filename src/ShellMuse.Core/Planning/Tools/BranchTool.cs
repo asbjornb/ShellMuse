@@ -3,14 +3,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using ShellMuse.Core.Sandbox;
 
-namespace ShellMuse.Core.Planning;
+namespace ShellMuse.Core.Planning.Tools;
 
-public class CommitTool : ITool
+public class BranchTool : ITool
 {
     private readonly SandboxRunner _runner;
     private readonly string _repoPath;
 
-    public CommitTool(SandboxRunner runner, string repoPath)
+    public BranchTool(SandboxRunner runner, string repoPath)
     {
         _runner = runner;
         _repoPath = repoPath;
@@ -18,7 +18,7 @@ public class CommitTool : ITool
 
     public Task<string> RunAsync(JsonElement args, CancellationToken cancellationToken = default)
     {
-        var message = args.GetProperty("message").GetString() ?? "commit";
-        return _runner.ExecAsync(_repoPath, $"git commit -am \"{message}\"", cancellationToken);
+        var name = args.GetProperty("name").GetString() ?? "muse-branch";
+        return _runner.ExecAsync(_repoPath, $"git switch -c {name}", cancellationToken);
     }
 }

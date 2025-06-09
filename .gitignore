@@ -1,0 +1,18 @@
+# .NET build artifacts
+bin/
+obj/
+TestResults/
+
+# VS Code
+.vscode/
+
+# user-specific files
+*.user
+*.suo
+
+# tooling
+.nuget/
+
+# GitHub Copilot index files
+CopilotIndices/
+FileContentIndex/

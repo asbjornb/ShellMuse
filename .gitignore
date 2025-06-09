@@ -12,3 +12,7 @@ TestResults/
 
 # tooling
 .nuget/
+
+# GitHub Copilot index files
+CopilotIndices/
+FileContentIndex/

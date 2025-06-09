@@ -58,7 +58,7 @@ shellmuse run <task> [--max-cost N --max-steps N] [-v]
 ```
 
 The `run` command executes a simple planner loop with built-in tools
-(`search`, `read_file`, `write_file`, `list_dir`, `build`, `test`, `commit`, `branch`, `finish`).
+(`search`, `read_file`, `write_file`, `list_dir`, `build`, `test`, `commit`, `branch`, `outdated_packages`, `finish`).
 
 Configuration defaults come from `appsettings.json`. Secrets can live in Visual
 Studio user secrets or environment variables prefixed with `SHELLMUSE_`.

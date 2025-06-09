@@ -111,6 +111,7 @@ public static class Program
                 (Tool.Search, new SearchTool()),
                 (Tool.ReadFile, new ReadFileTool()),
                 (Tool.WriteFile, new WriteFileTool()),
+                (Tool.ListDir, new ListDirTool()),
                 (Tool.Build, new BuildTool(runner, repoPath)),
                 (Tool.Test, new TestTool(runner, repoPath)),
                 (Tool.Commit, new CommitTool(runner, repoPath)),

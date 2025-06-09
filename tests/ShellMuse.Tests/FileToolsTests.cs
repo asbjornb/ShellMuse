@@ -32,4 +32,20 @@ public class FileToolsTests
         var result = await read.RunAsync(readArgs);
         Assert.Equal(string.Empty, result);
     }
+
+    [Fact]
+    public async Task ListDirReturnsEntries()
+    {
+        var dir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        Directory.CreateDirectory(dir);
+        File.WriteAllText(Path.Combine(dir, "a.txt"), "a");
+        Directory.CreateDirectory(Path.Combine(dir, "sub"));
+        var list = new ListDirTool();
+        var args = JsonDocument.Parse(JsonSerializer.Serialize(new { path = dir })).RootElement;
+        var result = await list.RunAsync(args);
+        var lines = result.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        Assert.Contains("a.txt", lines);
+        Assert.Contains("sub", lines);
+        Directory.Delete(dir, true);
+    }
 }

@@ -30,8 +30,14 @@ public class Planner
         for (int step = 0; step < _maxSteps; step++)
         {
             var toolJson = await RequestToolAsync(context.ToString(), cancellationToken);
-            if (!ToolCall.TryParse(toolJson, out var call) || call == null)
-                throw new InvalidOperationException($"Invalid tool call at step {step}: {toolJson}");
+            if (!ToolCall.TryParse(toolJson, out var call, out var parseError) || call == null)
+            {
+                var snippet = toolJson.Length <= 200 ? toolJson : toolJson[..200] + "...";
+                var msg = parseError != null
+                    ? $"Invalid tool call at step {step}: {parseError}. Response: {snippet}"
+                    : $"Invalid tool call at step {step}: {snippet}";
+                throw new InvalidOperationException(msg);
+            }
 
             try
             {

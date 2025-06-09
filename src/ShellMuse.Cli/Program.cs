@@ -14,13 +14,15 @@ public static class Program
 {
     public static async Task<int> Main(string[] args)
     {
-        if (args.Length == 0 || args[0] == "ask")
+        try
         {
-            var start = args.Length > 0 && args[0] == "ask" ? 1 : 0;
-            if (args.Length <= start)
+            if (args.Length == 0 || args[0] == "ask")
             {
-                Usage();
-                return 1;
+                var start = args.Length > 0 && args[0] == "ask" ? 1 : 0;
+                if (args.Length <= start)
+                {
+                    Usage();
+                    return 1;
             }
             var prompt = args[start];
             var config = ConfigLoader.Load();
@@ -30,14 +32,14 @@ public static class Program
                 Console.Write(chunk);
             Console.WriteLine();
             return 0;
-        }
-        else if (args[0] == "run")
-        {
-            if (args.Length < 2)
-            {
-                Usage();
-                return 1;
             }
+            else if (args[0] == "run")
+            {
+                if (args.Length < 2)
+                {
+                    Usage();
+                    return 1;
+                }
             var task = args[1];
             var runOpts = ParseRun(args, 2);
             var config = ConfigLoader.Load();
@@ -49,12 +51,18 @@ public static class Program
             var planner = new Planner(provider, palette, runOpts.MaxSteps);
             var rules = RulesLoader.Load(repoPath);
             var contextInfo = await GitContext.CaptureAsync();
-            await planner.RunAsync(task, rules + "\n" + contextInfo);
-            return 0;
+                await planner.RunAsync(task, rules + "\n" + contextInfo);
+                return 0;
+            }
+            else
+            {
+                Usage();
+                return 1;
+            }
         }
-        else
+        catch (InvalidOperationException ex)
         {
-            Usage();
+            Console.Error.WriteLine(ex.Message);
             return 1;
         }
     }

@@ -11,7 +11,7 @@ public static class ConfigLoader
         var builder = new ConfigurationBuilder()
             .SetBasePath(basePath)
             .AddJsonFile("appsettings.json", optional: true)
-            .AddUserSecrets<ConfigLoader>(optional: true)
+            .AddUserSecrets<AppConfig>(optional: true)
             .AddEnvironmentVariables(prefix: "SHELLMUSE_");
         var configRoot = builder.Build();
         var config = new AppConfig();

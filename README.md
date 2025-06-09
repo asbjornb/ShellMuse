@@ -30,6 +30,9 @@ shellmuse [ask] <prompt>
 shellmuse run <task> [--max-cost N --max-steps N] [-v]
 ```
 
+The `run` command executes a simple planner loop with built-in tools
+(`search`, `read_file`, `write_file`, `build`, `test`, `commit`, `branch`, `finish`).
+
 Configuration defaults come from `appsettings.json`. Secrets can live in Visual
 Studio user secrets or environment variables prefixed with `SHELLMUSE_`.
 

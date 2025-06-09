@@ -24,26 +24,25 @@ Each project targets **.NET 9.0** and will be expanded in future milestones.
 ## Quick start
 
 1. Install the [.NET 9 SDK preview](https://dotnet.microsoft.com/download/dotnet/9.0).
-2. Install [ripgrep](https://github.com/BurntSushi/ripgrep) and ensure `rg` is in your `PATH` (the runtime Docker image already includes it).
-3. Export your OpenAI API key:
+2. Export your OpenAI API key:
 
    ```powershell
    $env:SHELLMUSE_OPENAIAPIKEY = "sk-..."
    ```
 
-4. Build the solution (this runs the CSharpier formatter automatically):
+3. Build the solution (this runs the CSharpier formatter automatically):
 
    ```bash
    dotnet build
    ```
 
-5. Ask a question:
+4. Ask a question:
 
    ```bash
    dotnet run --project src/ShellMuse.Cli -- ask "2+2"
    ```
 
-6. Run a task inside the sandbox (Docker required, pulls `mcr.microsoft.com/dotnet/nightly/sdk:9.0` by default):
+5. Run a task inside the sandbox (Docker required, pulls `mcr.microsoft.com/dotnet/nightly/sdk:9.0` by default):
 
    ```bash
    dotnet run --project src/ShellMuse.Cli -- run "build the project"

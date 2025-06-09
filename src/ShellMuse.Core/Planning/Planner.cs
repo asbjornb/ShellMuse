@@ -31,12 +31,20 @@ public class Planner
         {
             var toolJson = await RequestToolAsync(context.ToString(), cancellationToken);
             if (!ToolCall.TryParse(toolJson, out var call) || call == null)
-                throw new InvalidOperationException("Invalid tool");
-            var result = await _palette.ExecuteAsync(call, cancellationToken);
-            context.Append("\n");
-            context.Append(result);
-            if (call.Tool == Tool.Finish)
-                break;
+                throw new InvalidOperationException($"Invalid tool call at step {step}: {toolJson}");
+
+            try
+            {
+                var result = await _palette.ExecuteAsync(call, cancellationToken);
+                context.Append("\n");
+                context.Append(result);
+                if (call.Tool == Tool.Finish)
+                    break;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Tool {call.Tool} failed: {ex.Message}", ex);
+            }
         }
     }
 

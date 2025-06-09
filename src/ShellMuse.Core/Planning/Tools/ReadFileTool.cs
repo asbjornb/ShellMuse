@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -7,9 +8,15 @@ namespace ShellMuse.Core.Planning.Tools;
 
 public class ReadFileTool : ITool
 {
-    public Task<string> RunAsync(JsonElement args, CancellationToken cancellationToken = default)
+    public Task<string> RunAsync(
+        JsonElement args,
+        CancellationToken cancellationToken = default,
+        Action<string>? outputLogger = null
+    )
     {
         var path = args.GetProperty("path").GetString() ?? string.Empty;
-        return Task.FromResult(File.Exists(path) ? File.ReadAllText(path) : "");
+        var result = File.Exists(path) ? File.ReadAllText(path) : string.Empty;
+        outputLogger?.Invoke($"read {path}");
+        return Task.FromResult(result);
     }
 }

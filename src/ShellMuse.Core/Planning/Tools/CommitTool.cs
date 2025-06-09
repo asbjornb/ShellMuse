@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,9 +17,20 @@ public class CommitTool : ITool
         _repoPath = repoPath;
     }
 
-    public Task<string> RunAsync(JsonElement args, CancellationToken cancellationToken = default)
+    public Task<string> RunAsync(
+        JsonElement args,
+        CancellationToken cancellationToken = default,
+        Action<string>? outputLogger = null
+    )
     {
         var message = args.GetProperty("message").GetString() ?? "commit";
-        return _runner.ExecAsync(_repoPath, $"git commit -am \"{message}\"", cancellationToken);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        cts.CancelAfter(TimeSpan.FromSeconds(30));
+        return _runner.ExecAsync(
+            _repoPath,
+            $"git commit -am \"{message}\"",
+            cts.Token,
+            outputLogger
+        );
     }
 }

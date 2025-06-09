@@ -6,5 +6,9 @@ namespace ShellMuse.Core.Planning;
 
 public interface ITool
 {
-    Task<string> RunAsync(JsonElement args, CancellationToken cancellationToken = default);
+    Task<string> RunAsync(
+        JsonElement args,
+        CancellationToken cancellationToken = default,
+        Action<string>? outputLogger = null
+    );
 }

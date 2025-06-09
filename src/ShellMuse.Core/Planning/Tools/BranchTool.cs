@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,9 +17,20 @@ public class BranchTool : ITool
         _repoPath = repoPath;
     }
 
-    public Task<string> RunAsync(JsonElement args, CancellationToken cancellationToken = default)
+    public Task<string> RunAsync(
+        JsonElement args,
+        CancellationToken cancellationToken = default,
+        Action<string>? outputLogger = null
+    )
     {
         var name = args.GetProperty("name").GetString() ?? "muse-branch";
-        return _runner.ExecAsync(_repoPath, $"git switch -c {name}", cancellationToken);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        cts.CancelAfter(TimeSpan.FromSeconds(30));
+        return _runner.ExecAsync(
+            _repoPath,
+            $"git switch -c {name}",
+            cts.Token,
+            outputLogger
+        );
     }
 }

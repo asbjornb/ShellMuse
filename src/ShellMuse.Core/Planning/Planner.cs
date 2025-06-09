@@ -52,7 +52,7 @@ public class Planner
                     argsSnippet = argsSnippet[..60] + "...";
                 stepLogger?.Invoke($"Step {step + 1}: {call.Tool} {argsSnippet}");
 
-                var result = await _palette.ExecuteAsync(call, cancellationToken);
+                var result = await _palette.ExecuteAsync(call, cancellationToken, stepLogger);
                 context.Append("\n");
                 context.Append(result);
                 if (call.Tool == Tool.Finish)

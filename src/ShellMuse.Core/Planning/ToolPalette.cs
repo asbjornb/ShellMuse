@@ -17,11 +17,12 @@ public class ToolPalette
 
     public async Task<string> ExecuteAsync(
         ToolCall call,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken = default,
+        Action<string>? outputLogger = null
     )
     {
         if (!_tools.TryGetValue(call.Tool, out var tool))
             throw new InvalidOperationException($"Unknown tool {call.Tool}");
-        return await tool.RunAsync(call.Args, cancellationToken);
+        return await tool.RunAsync(call.Args, cancellationToken, outputLogger);
     }
 }

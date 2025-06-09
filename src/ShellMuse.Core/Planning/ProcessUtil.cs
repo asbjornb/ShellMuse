@@ -10,7 +10,8 @@ internal static class ProcessUtil
     public static async Task<string> RunAsync(
         string fileName,
         string arguments,
-        CancellationToken ct = default
+        CancellationToken ct = default,
+        Action<string>? outputLogger = null
     )
     {
         var psi = new ProcessStartInfo(fileName, arguments)
@@ -23,12 +24,18 @@ internal static class ProcessUtil
         proc.OutputDataReceived += (_, e) =>
         {
             if (e.Data != null)
+            {
                 sb.AppendLine(e.Data);
+                outputLogger?.Invoke(e.Data);
+            }
         };
         proc.ErrorDataReceived += (_, e) =>
         {
             if (e.Data != null)
+            {
                 sb.AppendLine(e.Data);
+                outputLogger?.Invoke(e.Data);
+            }
         };
         proc.BeginOutputReadLine();
         proc.BeginErrorReadLine();

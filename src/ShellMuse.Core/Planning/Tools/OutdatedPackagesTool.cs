@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using ShellMuse.Core.Sandbox;
@@ -17,9 +18,17 @@ public class OutdatedPackagesTool : ITool
 
     public Task<string> RunAsync(
         System.Text.Json.JsonElement args,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken = default,
+        Action<string>? outputLogger = null
     )
     {
-        return _runner.ExecAsync(_repoPath, "dotnet list package --outdated", cancellationToken);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        cts.CancelAfter(TimeSpan.FromMinutes(2));
+        return _runner.ExecAsync(
+            _repoPath,
+            "dotnet list package --outdated",
+            cts.Token,
+            outputLogger
+        );
     }
 }

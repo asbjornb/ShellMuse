@@ -11,10 +11,12 @@ public class SearchToolTests
     [Fact]
     public async Task ReturnsMessageWhenRipgrepMissing()
     {
-        var original = Environment.GetEnvironmentVariable("PATH");
+        var originalPath = Environment.GetEnvironmentVariable("PATH");
+        var originalCustom = Environment.GetEnvironmentVariable("SHELLMUSE_RIPGREP");
         try
         {
             Environment.SetEnvironmentVariable("PATH", string.Empty);
+            Environment.SetEnvironmentVariable("SHELLMUSE_RIPGREP", null);
             var tool = new SearchTool();
             var args = JsonDocument.Parse("{\"query\":\"foo\"}").RootElement;
             var result = await tool.RunAsync(args);
@@ -22,7 +24,26 @@ public class SearchToolTests
         }
         finally
         {
-            Environment.SetEnvironmentVariable("PATH", original);
+            Environment.SetEnvironmentVariable("PATH", originalPath);
+            Environment.SetEnvironmentVariable("SHELLMUSE_RIPGREP", originalCustom);
+        }
+    }
+
+    [Fact]
+    public async Task UsesCustomRipgrepPath()
+    {
+        var original = Environment.GetEnvironmentVariable("SHELLMUSE_RIPGREP");
+        try
+        {
+            Environment.SetEnvironmentVariable("SHELLMUSE_RIPGREP", "echo");
+            var tool = new SearchTool();
+            var args = JsonDocument.Parse("{\"query\":\"foo\"}").RootElement;
+            var result = await tool.RunAsync(args);
+            Assert.Contains("foo", result);
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("SHELLMUSE_RIPGREP", original);
         }
     }
 }

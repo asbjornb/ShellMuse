@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ShellMuse.Core.Sandbox;
 
-namespace ShellMuse.Core.Planning;
+namespace ShellMuse.Core.Planning.Tools;
 
 public class TestTool : ITool
 {

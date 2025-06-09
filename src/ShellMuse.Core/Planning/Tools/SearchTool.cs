@@ -2,7 +2,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ShellMuse.Core.Planning;
+namespace ShellMuse.Core.Planning.Tools;
 
 public class SearchTool : ITool
 {

@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using ShellMuse.Core.Planning;
+using ShellMuse.Core.Planning.Tools;
 using ShellMuse.Core.Providers;
 using Xunit;
 

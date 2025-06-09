@@ -42,7 +42,7 @@ Each project targets **.NET 9.0** and will be expanded in future milestones.
    dotnet run --project src/ShellMuse.Cli -- ask "2+2"
    ```
 
-5. Run a task inside the sandbox:
+5. Run a task inside the sandbox (Docker required, pulls `mcr.microsoft.com/dotnet/nightly/sdk:9.0` by default):
 
    ```bash
    dotnet run --project src/ShellMuse.Cli -- run "build the project"

@@ -72,7 +72,7 @@ The MVP targets Windows 10/11 with PowerShell as the primary shell, implemented 
                     (commits allowed)
 ```
 
-**Base image**: `ghcr.io/shellmuse/runtime:dotnet-slim` (SDK, git, ripgrep)
+**Base image**: `mcr.microsoft.com/dotnet/nightly/sdk:9.0` (SDK, git, ripgrep)
 
 ## 7. Interfaces
 
@@ -89,7 +89,7 @@ shellmuse run  <task> [--max-cost 1.0 --max-steps 8] [--model gpt-4o] [-v]
 model         = "gpt-4o"
 temperature   = 0.2
 max_tokens    = 2048
-docker_image  = "ghcr.io/shellmuse/runtime:dotnet-slim"
+docker_image  = "mcr.microsoft.com/dotnet/nightly/sdk:9.0"
 ```
 
 ### 7.3 Tool JSON Schema (sent to model)

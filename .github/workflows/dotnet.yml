@@ -1,0 +1,19 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/dotnet/nightly/sdk:9.0
+    steps:
+      - uses: actions/checkout@v3
+      - name: Restore
+        run: dotnet restore ShellMuse.sln
+      - name: Build
+        run: dotnet build --no-restore ShellMuse.sln
+      - name: Test
+        run: dotnet test --no-build ShellMuse.sln

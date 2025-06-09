@@ -15,7 +15,9 @@ public class FileToolsTests
         var path = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
         var write = new WriteFileTool();
         var read = new ReadFileTool();
-        var writeArgs = JsonDocument.Parse(JsonSerializer.Serialize(new { path, content = "hello" })).RootElement;
+        var writeArgs = JsonDocument
+            .Parse(JsonSerializer.Serialize(new { path, content = "hello" }))
+            .RootElement;
         await write.RunAsync(writeArgs);
         var readArgs = JsonDocument.Parse(JsonSerializer.Serialize(new { path })).RootElement;
         var result = await read.RunAsync(readArgs);

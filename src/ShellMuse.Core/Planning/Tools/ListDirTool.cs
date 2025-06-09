@@ -13,10 +13,7 @@ public class ListDirTool : ITool
         var path = args.GetProperty("path").GetString() ?? ".";
         if (!Directory.Exists(path))
             return Task.FromResult(string.Empty);
-        var entries = Directory
-            .EnumerateFileSystemEntries(path)
-            .Select(Path.GetFileName)
-            .ToArray();
+        var entries = Directory.EnumerateFileSystemEntries(path).Select(Path.GetFileName).ToArray();
         return Task.FromResult(string.Join('\n', entries));
     }
 }

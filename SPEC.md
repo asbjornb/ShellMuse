@@ -37,6 +37,7 @@ The MVP targets Windows 10/11 with PowerShell as the primary shell, implemented 
 | F-9 | Built-in tool palette: search, read_file, write_file, list_dir, build, test, commit | Invalid tool aborts with error; commits allowed on branch |
 | F-10 | Cost & iteration guardrails (--max-cost, --max-steps) | Exceeding guard exits with code 2 |
 | F-11 | Windows/PowerShell compatibility – All paths, temp dirs work on Windows with PowerShell | CI job on Linux passes build/test acceptance |
+| F-12 | Repository `AGENTS.md` auto-injected | Model responses follow repo instructions. |
 
 ## 4. Security Requirements
 
@@ -140,4 +141,4 @@ docker_image  = "ghcr.io/shellmuse/runtime:dotnet-slim"
 |-------------|
 | Use local OLlama llm for some stuff? |
 | Nuget tool to find latest package versions? |
-| Add something like AGENTS.md as part of prompt? |
+| Include AGENTS.md instructions in prompt |

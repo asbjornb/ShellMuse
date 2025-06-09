@@ -12,12 +12,15 @@ public class RulesLoaderTests
     {
         var dir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
         Directory.CreateDirectory(dir);
-        var path = Path.Combine(dir, ".muse-rules.md");
-        File.WriteAllText(path, "test rules");
+        var rules = Path.Combine(dir, ".muse-rules.md");
+        var agents = Path.Combine(dir, "AGENTS.md");
+        File.WriteAllText(rules, "rules");
+        File.WriteAllText(agents, "agents");
 
-        Assert.Equal("test rules", RulesLoader.Load(dir));
+        Assert.Equal("rules\nagents\n", RulesLoader.Load(dir));
 
-        File.Delete(path);
+        File.Delete(rules);
+        File.Delete(agents);
 
         Assert.Equal(string.Empty, RulesLoader.Load(dir));
     }

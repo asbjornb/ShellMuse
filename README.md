@@ -60,6 +60,9 @@ shellmuse run <task> [--max-cost N --max-steps N] [-v]
 The `run` command executes a simple planner loop with built-in tools
 (`search`, `read_file`, `write_file`, `list_dir`, `build`, `test`, `commit`, `branch`, `finish`).
 
+If the repository contains `.muse-rules.md` or `AGENTS.md`, their contents are
+added to the prompt so the model follows your project-specific guidelines.
+
 Configuration defaults come from `appsettings.json`. Secrets can live in Visual
 Studio user secrets or environment variables prefixed with `SHELLMUSE_`.
 

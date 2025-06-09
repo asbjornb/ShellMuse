@@ -114,7 +114,7 @@ public static class Program
                 (Tool.Test, new TestTool(runner, repoPath)),
                 (Tool.Commit, new CommitTool(runner, repoPath)),
                 (Tool.Branch, new BranchTool(runner, repoPath)),
-                (Tool.Finish, new FinishTool())
+                (Tool.Finish, new FinishTool()),
             }
         );
     }

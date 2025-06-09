@@ -9,5 +9,5 @@ public enum Tool
     Test,
     Commit,
     Branch,
-    Finish
+    Finish,
 }

@@ -39,7 +39,7 @@ public class OpenAIProviderTests
                 + "data: [DONE]\n\n";
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(data)
+                Content = new StringContent(data),
             };
             return Task.FromResult(response);
         }

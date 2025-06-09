@@ -40,7 +40,7 @@ public class OpenAIChatProvider : IChatProvider
             messages = new[] { new { role = "user", content = prompt } },
             temperature = _config.Temperature,
             max_tokens = _config.MaxTokens,
-            stream = true
+            stream = true,
         };
         request.Content = JsonContent.Create(payload);
 

@@ -24,6 +24,7 @@ public class Planner
     public async Task RunAsync(
         string task,
         string contextInfo = "",
+        Action<string>? stepLogger = null,
         CancellationToken cancellationToken = default
     )
     {
@@ -46,6 +47,11 @@ public class Planner
 
             try
             {
+                var argsSnippet = call.Args.GetRawText();
+                if (argsSnippet.Length > 60)
+                    argsSnippet = argsSnippet[..60] + "...";
+                stepLogger?.Invoke($"Step {step + 1}: {call.Tool} {argsSnippet}");
+
                 var result = await _palette.ExecuteAsync(call, cancellationToken);
                 context.Append("\n");
                 context.Append(result);

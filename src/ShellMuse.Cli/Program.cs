@@ -51,7 +51,7 @@ public static class Program
                 var planner = new Planner(provider, palette, runOpts.MaxSteps);
                 var rules = RulesLoader.Load(repoPath);
                 var contextInfo = await GitContext.CaptureAsync();
-                await planner.RunAsync(task, rules + "\n" + contextInfo);
+                await planner.RunAsync(task, rules + "\n" + contextInfo, Console.WriteLine);
                 return 0;
             }
             else

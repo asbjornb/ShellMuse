@@ -31,6 +31,10 @@ The planner can invoke the following tools (implemented under `ShellMuse.Core/Pl
 - `branch` – create or switch branches
 - `finish` – stop planning
 
+## Branching Policy
+
+- Use **only one branch** per task. Avoid creating multiple branches for the same set of changes.
+
 ## Coding Conventions
 
 - Use **C#** targeting **.NET 9** for all production code.

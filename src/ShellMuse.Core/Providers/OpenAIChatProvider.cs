@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Threading;
 using ShellMuse.Core.Config;
 
 namespace ShellMuse.Core.Providers;
@@ -39,12 +41,12 @@ public class OpenAIChatProvider : IChatProvider
 
         while (!reader.EndOfStream && !cancellationToken.IsCancellationRequested)
         {
-            var line = await reader.ReadLineAsync();
+            var line = await reader.ReadLineAsync(cancellationToken);
             if (line == null)
                 continue;
             if (!line.StartsWith("data:"))
                 continue;
-            var data = line.Substring(5).Trim();
+            var data = line[5..].Trim();
             if (data == "[DONE]")
                 yield break;
 

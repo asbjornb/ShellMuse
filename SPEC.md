@@ -144,3 +144,4 @@ docker_image  = "ghcr.io/shellmuse/runtime:dotnet-slim"
 | Check if we're using that kernel library |
 | Use local OLlama llm for some stuff? |
 | Nuget tool to find latest package versions? |
+| Add something like AGENTS.md as part of prompt? |

@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 using ShellMuse.Core.Config;
 using ShellMuse.Core.Planning;
 using ShellMuse.Core.Providers;
+using ShellMuse.Core.Git;
+using ShellMuse.Core.Rules;
+using ShellMuse.Core.Sandbox;
 
 namespace ShellMuse.Cli;
 
@@ -40,9 +43,13 @@ public static class Program
             var config = ConfigLoader.Load();
             using var http = new HttpClient();
             var provider = new OpenAIChatProvider(http, config);
-            var palette = DefaultPalette();
+            var repoPath = Environment.CurrentDirectory;
+            var runner = new SandboxRunner(config.DockerImage);
+            var palette = DefaultPalette(runner, repoPath);
             var planner = new Planner(provider, palette, runOpts.MaxSteps);
-            await planner.RunAsync(task);
+            var rules = RulesLoader.Load(repoPath);
+            var contextInfo = await GitContext.CaptureAsync();
+            await planner.RunAsync(task, rules + "\n" + contextInfo);
             return 0;
         }
         else
@@ -82,17 +89,17 @@ public static class Program
         return new RunOptions(maxCost, maxSteps);
     }
 
-    private static ToolPalette DefaultPalette()
+    private static ToolPalette DefaultPalette(SandboxRunner runner, string repoPath)
     {
         return new ToolPalette(new (Tool, ITool)[]
         {
             (Tool.Search, new SearchTool()),
             (Tool.ReadFile, new ReadFileTool()),
             (Tool.WriteFile, new WriteFileTool()),
-            (Tool.Build, new BuildTool()),
-            (Tool.Test, new TestTool()),
-            (Tool.Commit, new CommitTool()),
-            (Tool.Branch, new BranchTool()),
+            (Tool.Build, new BuildTool(runner, repoPath)),
+            (Tool.Test, new TestTool(runner, repoPath)),
+            (Tool.Commit, new CommitTool(runner, repoPath)),
+            (Tool.Branch, new BranchTool(runner, repoPath)),
             (Tool.Finish, new FinishTool())
         });
     }

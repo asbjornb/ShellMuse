@@ -21,9 +21,12 @@ public class Planner
         _maxSteps = maxSteps;
     }
 
-    public async Task RunAsync(string task, CancellationToken cancellationToken = default)
+    public async Task RunAsync(string task, string contextInfo = "", CancellationToken cancellationToken = default)
     {
-        var context = new StringBuilder(task);
+        var context = new StringBuilder();
+        if (!string.IsNullOrEmpty(contextInfo))
+            context.AppendLine(contextInfo);
+        context.Append(task);
         for (int step = 0; step < _maxSteps; step++)
         {
             var toolJson = await RequestToolAsync(context.ToString(), cancellationToken);

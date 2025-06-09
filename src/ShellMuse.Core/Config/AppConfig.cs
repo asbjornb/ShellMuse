@@ -8,4 +8,3 @@ public record AppConfig
     public string DockerImage { get; init; } = "ghcr.io/shellmuse/runtime:dotnet-slim";
     public string OpenAIApiKey { get; init; } = string.Empty;
 }
-

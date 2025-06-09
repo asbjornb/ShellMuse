@@ -20,10 +20,20 @@ public class OpenAIChatProvider : IChatProvider
         _config = config;
     }
 
-    public async IAsyncEnumerable<string> StreamChatAsync(string prompt, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<string> StreamChatAsync(
+        string prompt,
+        [System.Runtime.CompilerServices.EnumeratorCancellation]
+            CancellationToken cancellationToken = default
+    )
     {
-        using var request = new HttpRequestMessage(HttpMethod.Post, "https://api.openai.com/v1/chat/completions");
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _config.OpenAIApiKey);
+        using var request = new HttpRequestMessage(
+            HttpMethod.Post,
+            "https://api.openai.com/v1/chat/completions"
+        );
+        request.Headers.Authorization = new AuthenticationHeaderValue(
+            "Bearer",
+            _config.OpenAIApiKey
+        );
         var payload = new
         {
             model = _config.Model,
@@ -34,7 +44,11 @@ public class OpenAIChatProvider : IChatProvider
         };
         request.Content = JsonContent.Create(payload);
 
-        using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+        using var response = await _client.SendAsync(
+            request,
+            HttpCompletionOption.ResponseHeadersRead,
+            cancellationToken
+        );
         response.EnsureSuccessStatusCode();
         await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
         using var reader = new StreamReader(stream);
@@ -53,7 +67,10 @@ public class OpenAIChatProvider : IChatProvider
             using var doc = JsonDocument.Parse(data);
             foreach (var choice in doc.RootElement.GetProperty("choices").EnumerateArray())
             {
-                if (choice.TryGetProperty("delta", out var delta) && delta.TryGetProperty("content", out var content))
+                if (
+                    choice.TryGetProperty("delta", out var delta)
+                    && delta.TryGetProperty("content", out var content)
+                )
                 {
                     var text = content.GetString();
                     if (!string.IsNullOrEmpty(text))

@@ -15,7 +15,10 @@ public class ToolPalette
         _tools = tools.ToDictionary(t => t.kind, t => t.tool);
     }
 
-    public async Task<string> ExecuteAsync(ToolCall call, CancellationToken cancellationToken = default)
+    public async Task<string> ExecuteAsync(
+        ToolCall call,
+        CancellationToken cancellationToken = default
+    )
     {
         if (!_tools.TryGetValue(call.Tool, out var tool))
             throw new InvalidOperationException($"Unknown tool {call.Tool}");

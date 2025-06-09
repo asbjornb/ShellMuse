@@ -5,8 +5,7 @@ namespace ShellMuse.Core.Planning;
 
 public record ToolCall(Tool Tool, JsonElement Args)
 {
-    public static bool TryParse(string json, out ToolCall? call)
-        => TryParse(json, out call, out _);
+    public static bool TryParse(string json, out ToolCall? call) => TryParse(json, out call, out _);
 
     public static bool TryParse(string json, out ToolCall? call, out string? error)
     {

@@ -15,7 +15,10 @@ public class TestTool : ITool
         _repoPath = repoPath;
     }
 
-    public Task<string> RunAsync(System.Text.Json.JsonElement args, CancellationToken cancellationToken = default)
+    public Task<string> RunAsync(
+        System.Text.Json.JsonElement args,
+        CancellationToken cancellationToken = default
+    )
     {
         return _runner.ExecAsync(_repoPath, "dotnet test --no-build --nologo", cancellationToken);
     }

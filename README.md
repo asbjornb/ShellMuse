@@ -20,3 +20,16 @@ src/
 ```
 
 Each project targets **.NET 9.0** and will be expanded in future milestones.
+
+## Usage
+
+The `shellmuse` executable exposes two subcommands:
+
+```bash
+shellmuse [ask] <prompt>
+shellmuse run <task> [--max-cost N --max-steps N] [-v]
+```
+
+Configuration defaults come from `appsettings.json`. Secrets can live in Visual
+Studio user secrets or environment variables prefixed with `SHELLMUSE_`.
+

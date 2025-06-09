@@ -28,7 +28,12 @@ public static class Program
                 var prompt = args[start];
                 var config = ConfigLoader.Load();
                 using var http = new HttpClient();
-                var provider = new OpenAIChatProvider(http, config);
+                var provider = config.UseLocalLlm
+                    ? new HybridChatProvider(
+                        new OpenAIChatProvider(http, config),
+                        new OllamaChatProvider(http, config)
+                    )
+                    : new OpenAIChatProvider(http, config);
                 await foreach (var chunk in provider.StreamChatAsync(prompt))
                     Console.Write(chunk);
                 Console.WriteLine();
@@ -45,7 +50,12 @@ public static class Program
                 var runOpts = ParseRun(args, 2);
                 var config = ConfigLoader.Load();
                 using var http = new HttpClient();
-                var provider = new OpenAIChatProvider(http, config);
+                var provider = config.UseLocalLlm
+                    ? new HybridChatProvider(
+                        new OpenAIChatProvider(http, config),
+                        new OllamaChatProvider(http, config)
+                    )
+                    : new OpenAIChatProvider(http, config);
                 var repoPath = Environment.CurrentDirectory;
                 var runner = new SandboxRunner(config.DockerImage);
                 var palette = DefaultPalette(runner, repoPath);

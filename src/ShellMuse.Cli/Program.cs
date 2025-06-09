@@ -108,7 +108,7 @@ public static class Program
         return new ToolPalette(
             new (Tool, ITool)[]
             {
-                (Tool.Search, new SearchTool()),
+                (Tool.Search, new SearchTool(runner, repoPath)),
                 (Tool.ReadFile, new ReadFileTool()),
                 (Tool.WriteFile, new WriteFileTool()),
                 (Tool.ListDir, new ListDirTool()),

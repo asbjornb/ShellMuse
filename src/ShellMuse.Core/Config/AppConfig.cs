@@ -7,4 +7,5 @@ public record AppConfig
     public int MaxTokens { get; init; } = 2048;
     public string DockerImage { get; init; } = "ghcr.io/shellmuse/runtime:dotnet-slim";
     public string OpenAIApiKey { get; init; } = string.Empty;
+    public bool UseLocalLlm { get; init; } = true;
 }

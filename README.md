@@ -24,7 +24,10 @@ Each project targets **.NET 9.0** and will be expanded in future milestones.
 ## Quick start
 
 1. Install the [.NET 9 SDK preview](https://dotnet.microsoft.com/download/dotnet/9.0).
-2. Export your OpenAI API key:
+2. By default ShellMuse talks to a local [Ollama](https://ollama.ai) instance on `localhost:11434`.
+   Simple requests are handled locally, while complex planning or coding prompts go to OpenAI.
+   Set `SHELLMUSE_USELOCALLLM=false` to disable Ollama entirely.
+   Export your OpenAI API key:
 
    ```powershell
    $env:SHELLMUSE_OPENAIAPIKEY = "sk-..."

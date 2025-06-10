@@ -35,4 +35,14 @@ public class ToolCallTests
         Assert.Null(call);
         Assert.False(string.IsNullOrEmpty(error));
     }
+
+    [Fact]
+    public void ToolNameAsPropertyFails()
+    {
+        var json = "{\"branch\":\"feature\"}";
+        var ok = ToolCall.TryParse(json, out var call, out var error);
+        Assert.False(ok);
+        Assert.Null(call);
+        Assert.Equal("Missing 'tool' property", error);
+    }
 }

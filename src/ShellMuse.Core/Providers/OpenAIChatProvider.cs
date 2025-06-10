@@ -42,7 +42,8 @@ public class OpenAIChatProvider : IChatProvider
                 new
                 {
                     role = "system",
-                    content = "You are a coding agent. Respond ONLY with JSON matching {\"tool\":string, \"args\":object}. Available tools: search, read_file, write_file, build, test, commit, branch, finish.",
+                    content =
+                        "You are a coding agent. Respond ONLY with a JSON object containing a 'tool' property and an 'args' object. Example: {\"tool\":\"search\",\"args\":{\"query\":\"foo\"}}. Available tools: search, read_file, write_file, build, test, commit, branch, finish.",
                 },
                 new { role = "user", content = prompt },
             },
